@@ -43,6 +43,30 @@ describe('GameStorage', () => {
     expect(storage.load()).toEqual({ state, notice: 'memory-only' });
   });
 
+  it('falls back to memory when accessing global localStorage throws', () => {
+    const descriptor = Object.getOwnPropertyDescriptor(
+      globalThis,
+      'localStorage',
+    );
+    Object.defineProperty(globalThis, 'localStorage', {
+      configurable: true,
+      get: () => {
+        throw new DOMException('blocked', 'SecurityError');
+      },
+    });
+
+    try {
+      expect(new GameStorage().load()).toEqual({
+        state: initialGameState(),
+        notice: 'memory-only',
+      });
+    } finally {
+      if (descriptor) {
+        Object.defineProperty(globalThis, 'localStorage', descriptor);
+      }
+    }
+  });
+
   it('clear removes only the app-owned key', () => {
     const browserStorage = new MapStorage([
       [KEY, JSON.stringify(initialGameState())],

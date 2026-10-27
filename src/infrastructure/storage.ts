@@ -16,10 +16,11 @@ export interface GameStateStore {
 
 export class GameStorage implements GameStateStore {
   private memoryState = initialGameState();
+  private readonly storage: Storage | null;
 
-  constructor(
-    private readonly storage: Storage | null = globalThis.localStorage,
-  ) {}
+  constructor(storage?: Storage | null) {
+    this.storage = storage === undefined ? getBrowserStorage() : storage;
+  }
 
   load(): LoadResult {
     if (!this.storage) {
@@ -131,4 +132,12 @@ function isStationId(
   ids: readonly StationId[],
 ): value is StationId {
   return typeof value === 'string' && ids.some((id) => id === value);
+}
+
+function getBrowserStorage(): Storage | null {
+  try {
+    return globalThis.localStorage;
+  } catch {
+    return null;
+  }
 }

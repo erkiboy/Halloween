@@ -82,7 +82,7 @@ function renderCapture(model: GameViewModel): DocumentFragment {
   input.autocomplete = 'off';
   input.autocapitalize = 'words';
   input.spellcheck = false;
-  input.required = true;
+  input.setAttribute('aria-required', 'true');
 
   form.append(label, input);
   if (model.error) {

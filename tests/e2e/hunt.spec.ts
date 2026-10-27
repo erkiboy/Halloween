@@ -55,6 +55,15 @@ test('rejects another station answer without progress', async ({ page }) => {
   await expect(page.getByText(/Wasser rauscht/)).toHaveCount(0);
 });
 
+test('shows the custom message for an empty answer', async ({ page }) => {
+  await page.getByRole('button', { name: 'Geisterjagd starten' }).click();
+  await page.getByRole('button', { name: 'Einsaugen' }).click();
+
+  await expect(page.getByRole('alert')).toHaveText(
+    'Gib den Namen des Geistes ein.',
+  );
+});
+
 test('supports keyboard submission', async ({ page }) => {
   await page.getByRole('button', { name: 'Geisterjagd starten' }).press('Enter');
   await page.getByLabel('Name des Geistes').fill('König Buu Huu');
