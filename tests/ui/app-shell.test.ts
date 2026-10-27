@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 describe('app shell', () => {
   beforeEach(() => {
     vi.resetModules();
+    localStorage.clear();
     document.body.innerHTML = '<main id="app"></main>';
   });
 
