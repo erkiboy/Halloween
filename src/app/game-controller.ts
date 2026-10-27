@@ -13,6 +13,7 @@ import {
   renderGame,
   type GameViewModel,
 } from '../ui/render';
+import { playCaptureEffect } from '../ui/effects';
 
 export class GameController {
   private state = initialGameState();
@@ -96,6 +97,10 @@ export class GameController {
     this.phase = this.state.completed ? 'complete' : 'riddle';
     this.error = null;
     this.render();
+    const screen = this.root.querySelector<HTMLElement>('.screen');
+    if (screen) {
+      void playCaptureEffect(screen);
+    }
   };
 
   private reset(): void {

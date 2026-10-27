@@ -32,6 +32,9 @@ describe('renderGame', () => {
 
   it('renders current ghost capture with labeled input', () => {
     renderGame(root, model({ phase: 'capture' }));
+    expect(
+      getByRole(root, 'img', { name: 'Aktiver ICS-Geistersauger' }),
+    ).toBeVisible();
     expect(getByLabelText(root, 'Name des Geistes')).toHaveAttribute(
       'autocomplete',
       'off',

@@ -50,6 +50,14 @@ function renderIntro(): DocumentFragment {
 
 function renderCapture(model: GameViewModel): DocumentFragment {
   const content = document.createDocumentFragment();
+  const vacuum = document.createElement('img');
+  vacuum.className = 'ghost-vacuum';
+  vacuum.src = new URL(
+    '../assets/ghost-vacuum.svg',
+    import.meta.url,
+  ).href;
+  vacuum.alt = 'Aktiver ICS-Geistersauger';
+
   content.append(
     textElement('p', 'Geist entdeckt', 'eyebrow'),
     heading('Fang den Geist'),
@@ -58,6 +66,7 @@ function renderCapture(model: GameViewModel): DocumentFragment {
       'Lies den Namen auf dem Flyer und speise ihn in den Geistersauger ein.',
       'lead',
     ),
+    vacuum,
   );
 
   const form = createElement('form', 'capture-form');

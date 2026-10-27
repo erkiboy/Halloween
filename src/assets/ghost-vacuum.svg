@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img">
+  <defs>
+    <linearGradient id="canister" x1="0" x2="1">
+      <stop offset="0" stop-color="#24113d"/>
+      <stop offset="1" stop-color="#57307b"/>
+    </linearGradient>
+    <radialGradient id="energy">
+      <stop offset="0" stop-color="#efffe8"/>
+      <stop offset=".35" stop-color="#91ff65"/>
+      <stop offset="1" stop-color="#26b564" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <ellipse cx="355" cy="298" rx="210" ry="28" fill="#08040f" opacity=".55"/>
+  <path d="M170 264c-60-8-94-48-78-90 17-44 76-43 113-20" fill="none" stroke="#ba75ff" stroke-width="24" stroke-linecap="round"/>
+  <path d="M163 263c-60-8-94-48-78-90" fill="none" stroke="#e8cdff" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+  <rect x="179" y="94" width="248" height="196" rx="58" fill="url(#canister)" stroke="#d7aaff" stroke-width="8"/>
+  <rect x="218" y="122" width="170" height="118" rx="32" fill="#110820" stroke="#91ff65" stroke-width="7"/>
+  <circle cx="303" cy="181" r="52" fill="url(#energy)" filter="url(#glow)"/>
+  <path d="M280 181c30-38 70 13 34 31-31 16-58-20-35-43 28-28 79-2 74 40" fill="none" stroke="#efffe8" stroke-width="8" stroke-linecap="round"/>
+  <rect x="247" y="70" width="114" height="38" rx="18" fill="#ba75ff"/>
+  <path d="M427 146c72-21 118-7 127 26 10 38-35 68-86 49" fill="none" stroke="#91ff65" stroke-width="18" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="m534 140 63 17-34 56-23-23 13-27z" fill="#d8ffc8" stroke="#91ff65" stroke-width="7"/>
+  <circle cx="231" cy="286" r="24" fill="#170b2a" stroke="#d7aaff" stroke-width="7"/>
+  <circle cx="380" cy="286" r="24" fill="#170b2a" stroke="#d7aaff" stroke-width="7"/>
+</svg>
