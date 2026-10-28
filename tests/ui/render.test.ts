@@ -25,13 +25,15 @@ describe('renderGame', () => {
 
   it('renders intro before the mission starts', () => {
     renderGame(root, model({ phase: 'intro' }));
+    expect(queryByText(root, 'Fall ICS-2026-10')).toBeVisible();
     expect(
-      getByRole(root, 'button', { name: 'Geisterjagd starten' }),
+      getByRole(root, 'button', { name: 'Einsatz beginnen' }),
     ).toBeVisible();
   });
 
   it('renders current ghost capture with labeled input', () => {
     renderGame(root, model({ phase: 'capture' }));
+    expect(queryByText(root, 'ECTO-VAC // NAME INPUT')).toBeVisible();
     expect(
       getByRole(root, 'img', { name: 'Aktiver ICS-Geistersauger' }),
     ).toBeVisible();
@@ -39,7 +41,9 @@ describe('renderGame', () => {
       'autocomplete',
       'off',
     );
-    expect(getByRole(root, 'button', { name: 'Einsaugen' })).toBeVisible();
+    expect(
+      getByRole(root, 'button', { name: 'Ziel versiegeln' }),
+    ).toBeVisible();
   });
 
   it('renders one-screen riddle after a capture', () => {
@@ -49,9 +53,10 @@ describe('renderGame', () => {
       captured: ['entrance'],
     } satisfies GameState;
     renderGame(root, model({ state, phase: 'riddle' }));
-    expect(queryByText(root, /Wasser rauscht/)).toBeVisible();
+    expect(queryByText(root, 'SPUR 01/04')).toBeVisible();
+    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
     expect(
-      getByRole(root, 'button', { name: 'Ich habe den Geist gefunden' }),
+      getByRole(root, 'button', { name: 'Ziel vor Ort gefunden' }),
     ).toBeVisible();
   });
 

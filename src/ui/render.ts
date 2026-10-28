@@ -9,47 +9,98 @@ export interface GameViewModel {
 }
 
 export function renderGame(root: HTMLElement, model: GameViewModel): void {
-  const screen = createElement('section', 'screen');
+  const screen = createElement('section', 'screen case-file');
   screen.setAttribute('aria-labelledby', 'screen-title');
+  screen.append(createCaseHeader(model), createNotice(model.notice));
 
-  screen.append(createUtilityBar(model), createNotice(model.notice));
-
+  const body = createElement('div', 'case-body');
   switch (model.phase) {
     case 'intro':
-      screen.append(renderIntro());
+      body.append(renderIntro());
       break;
     case 'capture':
-      screen.append(renderCapture(model));
+      body.append(renderCapture(model));
       break;
     case 'riddle':
-      screen.append(renderRiddle(model.state));
+      body.append(renderRiddle(model.state));
       break;
     case 'complete':
-      screen.append(renderCompletion(model.state));
+      body.append(renderCompletion(model.state));
       break;
   }
-
-  screen.append(renderProgress(model.state));
+  body.append(renderProgress(model.state));
+  screen.append(body);
   root.replaceChildren(screen);
+}
+
+function createCaseHeader(model: GameViewModel): HTMLElement {
+  const header = createElement('header', 'case-header');
+  const identity = createElement('div');
+  identity.append(
+    textElement('p', 'ICS // PARANORMAL RESPONSE UNIT', 'unit-name'),
+    textElement('p', 'FALL-NR. ICS-2026-10', 'case-id'),
+  );
+
+  const status = textElement(
+    'span',
+    model.state.completed ? 'GESCHLOSSEN' : 'AKTIV',
+    `case-stamp${model.state.completed ? ' closed' : ''}`,
+  );
+  header.append(identity, status);
+
+  const utility = createElement('div', 'utility-bar');
+  utility.append(
+    actionButton(
+      'Akte zurücksetzen',
+      'reset',
+      'utility-action',
+    ),
+  );
+  header.append(utility);
+  return header;
 }
 
 function renderIntro(): DocumentFragment {
   const content = document.createDocumentFragment();
   content.append(
-    textElement('p', 'Paranormale Aktivität erkannt', 'eyebrow'),
-    heading('ICS Mansion is haunted'),
+    textElement('p', 'Fall ICS-2026-10', 'document-code'),
+    heading('Einsatzbefehl: ICS Mansion'),
     textElement(
       'p',
-      'Fange fünf Geister und sichere dir deinen Treat.',
+      'Fünf paranormale Signaturen wurden im Office bestätigt. Identifiziere jedes Ziel vor Ort. Sichere danach die nächste codierte Spur.',
       'lead',
     ),
-    actionButton('Geisterjagd starten', 'start', 'primary-action'),
+  );
+
+  const orders = createElement('dl', 'mission-orders');
+  orders.append(
+    term('Auftrag'),
+    definition('5 Erscheinungen lokalisieren und einfangen'),
+    term('Ausrüstung'),
+    definition('Smartphone, Kombinationsgabe, stabile Nerven'),
+    term('Belohnung'),
+    definition('Treat-Ausgabe nach vollständiger Akte'),
+  );
+  content.append(
+    orders,
+    actionButton('Einsatz beginnen', 'start', 'primary-action'),
   );
   return content;
 }
 
 function renderCapture(model: GameViewModel): DocumentFragment {
   const content = document.createDocumentFragment();
+  content.append(
+    textElement('p', 'ECTO-VAC // NAME INPUT', 'device-label'),
+    heading('Ziel identifizieren'),
+    textElement(
+      'p',
+      'Übernimm den exakten Namen vom Fundstück. Nur bestätigte Identitäten werden versiegelt.',
+      'lead',
+    ),
+  );
+
+  const equipment = createElement('figure', 'equipment-panel');
   const vacuum = document.createElement('img');
   vacuum.className = 'ghost-vacuum';
   vacuum.src = new URL(
@@ -57,23 +108,17 @@ function renderCapture(model: GameViewModel): DocumentFragment {
     import.meta.url,
   ).href;
   vacuum.alt = 'Aktiver ICS-Geistersauger';
-
-  content.append(
-    textElement('p', 'Geist entdeckt', 'eyebrow'),
-    heading('Fang den Geist'),
-    textElement(
-      'p',
-      'Lies den Namen auf dem Flyer und speise ihn in den Geistersauger ein.',
-      'lead',
-    ),
+  equipment.append(
     vacuum,
+    textElement('figcaption', 'UNIT 03 // CONTAINMENT READY'),
   );
+  content.append(equipment);
 
   const form = createElement('form', 'capture-form');
   form.dataset.action = 'capture';
   form.setAttribute('aria-label', 'Geist einfangen');
 
-  const label = textElement('label', 'Name des Geistes', 'field-label');
+  const label = textElement('label', 'Identität des Ziels', 'field-label');
   label.htmlFor = 'ghost-name';
   const input = document.createElement('input');
   input.id = 'ghost-name';
@@ -82,6 +127,8 @@ function renderCapture(model: GameViewModel): DocumentFragment {
   input.autocomplete = 'off';
   input.autocapitalize = 'words';
   input.spellcheck = false;
+  input.placeholder = 'GEISTERNAME';
+  input.setAttribute('aria-label', 'Name des Geistes');
   input.setAttribute('aria-required', 'true');
 
   form.append(label, input);
@@ -96,7 +143,7 @@ function renderCapture(model: GameViewModel): DocumentFragment {
     error.setAttribute('role', 'alert');
     form.append(error);
   }
-  form.append(actionButton('Einsaugen', undefined, 'primary-action', 'submit'));
+  form.append(actionButton('Ziel versiegeln', undefined, 'primary-action', 'submit'));
   content.append(form);
   return content;
 }
@@ -110,12 +157,26 @@ function renderRiddle(state: GameState): DocumentFragment {
     throw new Error('Missing riddle for current progress');
   }
 
+  const clueNumber = String(state.captured.length).padStart(2, '0');
   content.append(
-    textElement('p', 'Neue Spur', 'eyebrow'),
-    heading('Wo spukt es als Nächstes?'),
-    textElement('p', capturedStation.nextRiddle, 'riddle'),
+    textElement('p', `SPUR ${clueNumber}/04`, 'document-code'),
+    heading('Codierte Fallnotiz'),
+    textElement(
+      'p',
+      'QUERVERWEIS // POPKULTURARCHIV',
+      'reference-label',
+    ),
+  );
+
+  const clue = createElement('blockquote', 'riddle');
+  clue.append(
+    textElement('p', capturedStation.nextRiddle),
+    textElement('span', 'ORT NICHT DIREKT BENANNT', 'clue-stamp'),
+  );
+  content.append(
+    clue,
     actionButton(
-      'Ich habe den Geist gefunden',
+      'Ziel vor Ort gefunden',
       'found',
       'primary-action',
     ),
@@ -126,8 +187,8 @@ function renderRiddle(state: GameState): DocumentFragment {
 function renderCompletion(state: GameState): DocumentFragment {
   const content = document.createDocumentFragment();
   content.append(
-    textElement('p', 'Jagd abgeschlossen', 'eyebrow'),
-    heading('Mission erfüllt'),
+    textElement('p', 'ABSCHLUSSBERICHT // 05/05', 'document-code'),
+    heading('Akte geschlossen'),
     textElement(
       'p',
       'Mission erfüllt: Alle fünf Geister wurden eingefangen.',
@@ -153,38 +214,27 @@ function renderCompletion(state: GameState): DocumentFragment {
 }
 
 function renderProgress(state: GameState): HTMLOListElement {
-  const list = createElement('ol', 'progress') as HTMLOListElement;
+  const list = createElement('ol', 'evidence-index') as HTMLOListElement;
   list.setAttribute('aria-label', 'Jagdfortschritt');
 
-  for (const station of STATIONS) {
+  STATIONS.forEach((station, index) => {
     const isCaptured = state.captured.includes(station.id);
-    const item = textElement(
-      'li',
-      isCaptured ? station.ghostName : 'Unbekannter Geist',
-      isCaptured ? 'captured' : 'pending',
+    const item = createElement('li', isCaptured ? 'secured' : 'open');
+    item.setAttribute(
+      'aria-label',
+      `Akte ${index + 1}: ${isCaptured ? 'gesichert' : 'offen'}`,
+    );
+    item.append(
+      textElement('span', String(index + 1).padStart(2, '0'), 'evidence-number'),
+      textElement(
+        'span',
+        isCaptured ? 'GESICHERT' : 'OFFEN',
+        'evidence-state',
+      ),
     );
     list.append(item);
-  }
+  });
   return list;
-}
-
-function createUtilityBar(model: GameViewModel): HTMLElement {
-  const utility = createElement('div', 'utility-bar');
-  const sound = actionButton(
-    model.state.soundEnabled ? 'Ton ausschalten' : 'Ton einschalten',
-    'toggle-sound',
-    'utility-action',
-  );
-  sound.setAttribute('aria-pressed', String(model.state.soundEnabled));
-  utility.append(
-    sound,
-    actionButton(
-      'Fortschritt zurücksetzen',
-      'reset',
-      'utility-action',
-    ),
-  );
-  return utility;
 }
 
 function createNotice(
@@ -202,6 +252,14 @@ function createNotice(
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   return status;
+}
+
+function term(text: string): HTMLElement {
+  return textElement('dt', text);
+}
+
+function definition(text: string): HTMLElement {
+  return textElement('dd', text);
 }
 
 function heading(value: string): HTMLHeadingElement {

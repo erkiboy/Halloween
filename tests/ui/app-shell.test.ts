@@ -13,10 +13,10 @@ describe('app shell', () => {
     const app = document.querySelector<HTMLElement>('#app');
     expect(app).not.toBeNull();
     expect(
-      getByRole(app!, 'heading', { name: 'ICS Mansion is haunted' }),
+      getByRole(app!, 'heading', { name: 'Einsatzbefehl: ICS Mansion' }),
     ).toBeVisible();
     expect(
-      getByRole(app!, 'button', { name: 'Geisterjagd starten' }),
+      getByRole(app!, 'button', { name: 'Einsatz beginnen' }),
     ).toBeVisible();
   });
 });

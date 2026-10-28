@@ -30,7 +30,7 @@ describe('GameController', () => {
   it('starts at entrance capture after the intro action', () => {
     new GameController(root, store).start();
     fireEvent.click(
-      getByRole(root, 'button', { name: 'Geisterjagd starten' }),
+      getByRole(root, 'button', { name: 'Einsatz beginnen' }),
     );
     expect(getByLabelText(root, 'Name des Geistes')).toBeVisible();
   });
@@ -61,7 +61,7 @@ describe('GameController', () => {
       target: { value: 'king boo' },
     });
     fireEvent.submit(getByRole(root, 'form', { name: 'Geist einfangen' }));
-    expect(queryByText(root, /Wasser rauscht/)).toBeVisible();
+    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
     expect(store.saved.at(-1)?.currentStationId).toBe('wc');
   });
 
@@ -71,10 +71,10 @@ describe('GameController', () => {
       notice: null,
     };
     new GameController(root, store).start();
-    expect(queryByText(root, /Wasser rauscht/)).toBeVisible();
+    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
     fireEvent.click(
       getByRole(root, 'button', {
-        name: 'Ich habe den Geist gefunden',
+        name: 'Ziel vor Ort gefunden',
       }),
     );
     expect(getByLabelText(root, 'Name des Geistes')).toBeVisible();
@@ -86,7 +86,7 @@ describe('GameController', () => {
       notice: null,
     };
     new GameController(root, store).start();
-    expect(queryByText(root, /Wasser rauscht/)).toBeVisible();
+    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
   });
 
   it('requires confirmation before reset', () => {
@@ -97,7 +97,7 @@ describe('GameController', () => {
     const confirmReset = vi.fn(() => false);
     new GameController(root, store, confirmReset).start();
     fireEvent.click(
-      getByRole(root, 'button', { name: 'Fortschritt zurücksetzen' }),
+      getByRole(root, 'button', { name: 'Akte zurücksetzen' }),
     );
     expect(confirmReset).toHaveBeenCalledOnce();
     expect(store.clearCount).toBe(0);
@@ -107,7 +107,7 @@ describe('GameController', () => {
 function startCapture(root: HTMLElement, store: FakeStore): void {
   new GameController(root, store).start();
   fireEvent.click(
-    getByRole(root, 'button', { name: 'Geisterjagd starten' }),
+    getByRole(root, 'button', { name: 'Einsatz beginnen' }),
   );
 }
 

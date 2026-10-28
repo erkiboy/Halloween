@@ -18,28 +18,28 @@ export const STATIONS: readonly Station[] = [
     ghostName: 'König Buu Huu',
     acceptedAnswers: ['König Buu Huu', 'Buu Huu', 'King Boo'],
     nextRiddle:
-      'Dein nächster Geist versteckt sich dort, wo selbst Geisterjäger kurz allein verschwinden und Wasser rauscht.',
+      'Der nächste Spuk bewacht einen Eingang, den nur eine Sprache ohne Beine öffnen kann. Wo eine Schülerin seit Jahrzehnten klagt und Rohre tiefer führen als jeder Abfluss, beginnt deine Suche.',
   },
   {
     id: 'wc',
     ghostName: 'Maulende Myrte',
     acceptedAnswers: ['Maulende Myrte', 'Myrte'],
     nextRiddle:
-      'Folge dem Duft gerösteter Bohnen. Zwischen Tassen und Koffein wartet der nächste Spuk.',
+      'Drei Zeichen kündigen ihn an: Das Licht flackert. Das Telefon schweigt. Ein Bus erscheint. In Bikini Bottom begann damit eine gefürchtete Nachtschicht. Im ICS ersetzt du Burger durch Bohnen und folgst dorthin, wo die Crew ihren Hunger und ihre Müdigkeit besiegt.',
   },
   {
     id: 'bistro',
     ghostName: 'Hackfleisch hassender Zerhacker',
     acceptedAnswers: ['Hackfleisch hassender Zerhacker'],
     nextRiddle:
-      'Viele Stimmen, ein großer Tisch: Suche den Raum, in dem die meisten Geister gleichzeitig tagen könnten.',
+      'Seit Jahrhunderten spukt er ohne gültige Lizenz. Seine Burg fehlt, doch ein Saal genügt. Suche keine Rittertafel: Finde jene Runde, die mehr Lebende versammelt als jede andere im Haus. Dort wartet der einzig behördlich geprüfte Spuk.',
   },
   {
     id: 'meeting-room',
     ghostName: 'Hui Buh',
     acceptedAnswers: ['Hui Buh'],
     nextRiddle:
-      'Für deinen letzten Einsatz brauchst du jene, die im Office Ordnung schaffen, Fragen lösen und den Treat bewachen.',
+      'Der Letzte wartet nicht dort, wo du schläfst, sondern dort, wo Albträume des Büroalltags enden: verlorene Schlüssel, fehlende Vorräte, unbekannte Räume. Finde die Stelle, die all das verwaltet. Dein Lohn liegt bereits in ihrer Obhut.',
   },
   {
     id: 'office-management',

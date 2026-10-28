@@ -86,7 +86,7 @@ Source konfigurieren.
 7. Weitere Flyer in fester Route platzieren; Schreibweise muss exakt den
    kanonischen Namen oben entsprechen.
 
-Für wiederholte Testläufe `Fortschritt zurücksetzen` in der App verwenden.
+Für wiederholte Testläufe `Akte zurücksetzen` in der App verwenden.
 
 ## Datenschutz
 
