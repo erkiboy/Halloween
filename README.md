@@ -1,16 +1,16 @@
 # ICS Mansion Haunt
 
-Mobile Halloween-Schnitzeljagd für das ICS Office. Die statische Web-App führt
-Teilnehmende über fünf Stationen, prüft Geisternamen und speichert Fortschritt
-ausschließlich im Browser.
+Mobile Halloween scavenger hunt for the ICS office. The static web app guides
+participants through five stations, validates ghost names, and stores progress
+exclusively in the browser.
 
-## Voraussetzungen
+## Requirements
 
 - Node.js 22
-- npm 10 oder neuer
-- Playwright Chromium und WebKit für Browser-Tests
+- npm 10 or newer
+- Playwright Chromium and WebKit for browser tests
 
-## Lokale Entwicklung
+## Local development
 
 ```bash
 nvm use
@@ -18,78 +18,74 @@ npm ci
 npm run dev
 ```
 
-Vollständige Prüfung:
+Full validation:
 
 ```bash
 npx playwright install chromium webkit
 npm run check
 ```
 
-Produktions-Build:
+Production build:
 
 ```bash
 npm run build
 ```
 
-Der host-neutrale Build liegt danach unter `dist/` und verwendet relative
-Asset-Pfade.
+The host-neutral build is written to `dist/` and uses relative asset paths.
 
-## Inhalte ändern
+## Changing content
 
-Reihenfolge, Geisternamen, erlaubte Aliase und Rätseltexte liegen ausschließlich
-in [`src/content/stations.ts`](src/content/stations.ts). Bei Änderungen immer
-Tests anpassen und `npm run check` ausführen.
+Route order, ghost names, accepted aliases, and riddle text live exclusively in
+[`src/content/stations.ts`](src/content/stations.ts). Update tests and run
+`npm run check` whenever this content changes.
 
-Die feste Reihenfolge lautet:
+The fixed route is:
 
-1. Eingang – König Buu Huu
-2. WC – Maulende Myrte
-3. Bistro – Hackfleisch hassender Zerhacker
-4. größter Meetingraum – Hui Buh
+1. Entrance tutorial – King Boo
+2. Restroom – Moaning Myrtle
+3. Bistro – Hash-Slinging Slasher
+4. Largest meeting room – Hui Buh
 5. Office Management – Freddy Krueger
 
-Clientseitige Antworten sind im ausgelieferten JavaScript lesbar. Keine
-Zugangsdaten, personenbezogenen Daten, internen Raumpläne oder vertraulichen
-Office-Informationen in Source oder Assets ablegen.
+Client-side answers are readable in the delivered JavaScript. Never store
+credentials, personal data, internal floor plans, or confidential office
+information in source files or assets.
 
 ## Hosting
 
 ### GitLab Pages
 
-GitLab Pages ist Primärziel. `.gitlab-ci.yml` führt Tests automatisch aus; der
-`pages`-Job ist absichtlich **manuell**. Deployment erst nach Review explizit in
-GitLab starten.
+GitLab Pages is the primary target. `.gitlab-ci.yml` runs tests automatically;
+the `pages` job is intentionally **manual**. Start deployment explicitly only
+after review.
 
-Vor Aktivierung prüfen:
+Before enabling:
 
-1. GitLab-Instanz unterstützt öffentlich erreichbare Pages.
-2. Projekt darf eine öffentliche Pages-Seite aus privatem Repository liefern.
-3. `npm run check` läuft lokal grün.
-4. Pages-URL enthält keine interne Host-Bezeichnung, die nicht extern auflösbar
-   ist.
+1. The GitLab instance supports publicly reachable Pages.
+2. The project may publish a public Pages site from a private repository.
+3. `npm run check` passes locally.
+4. The Pages URL contains no internal hostname that cannot resolve externally.
 
 ### GitHub Pages
 
-`.github/workflows/pages.yml` ist Fallback und ausschließlich über
-`workflow_dispatch` startbar. Vor Nutzung GitHub Pages mit GitHub Actions als
-Source konfigurieren.
+`.github/workflows/pages.yml` is the fallback and can only be started through
+`workflow_dispatch`. Configure GitHub Pages to use GitHub Actions as its source
+before running it.
 
-## QR-Code und Office-Abnahme
+## QR code and office acceptance
 
-1. Gewähltes Pages-Deployment nach expliziter Freigabe ausführen.
-2. Finale URL auf privatem Smartphone ohne Firmen-VPN öffnen.
-3. Komplette Route auf iOS und Android durchspielen.
-4. Erst danach QR-Code aus finaler URL erzeugen.
-5. QR-Code in den Eingangs-Flyer einsetzen.
-6. Gedruckten QR-Code in geplanter Größe und Beleuchtung erneut mit iOS und
-   Android testen.
-7. Weitere Flyer in fester Route platzieren; Schreibweise muss exakt den
-   kanonischen Namen oben entsprechen.
+1. Run the selected Pages deployment after explicit approval.
+2. Open the final URL on a personal smartphone without corporate VPN.
+3. Complete the entire route on iOS and Android.
+4. Generate the QR code from the final URL only after that check.
+5. Place the QR code on the entrance poster.
+6. Test the printed QR at its intended size and lighting on iOS and Android.
+7. Place station posters along the fixed route using the canonical names above.
 
-Für wiederholte Testläufe `Akte zurücksetzen` in der App verwenden.
+For repeated test runs, use `Reset case file` in the app.
 
-## Datenschutz
+## Privacy
 
-App besitzt kein Backend, Tracking, Analytics oder Login. Gespeichert werden nur
-Schema-Version, aktuelle Station, gefangene Stationen, Abschlussstatus und
-Tonpräferenz unter `ics-mansion-haunt:game-state` in `localStorage`.
+The app has no backend, tracking, analytics, or login. It stores only schema
+version, current station, captured stations, completion status, and sound
+preference under `ics-mansion-haunt:game-state` in `localStorage`.

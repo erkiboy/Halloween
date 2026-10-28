@@ -25,7 +25,7 @@ export class GameController {
     private readonly root: HTMLElement,
     private readonly storage: GameStateStore,
     private readonly confirmReset: () => boolean = () =>
-      window.confirm('Fortschritt wirklich zurücksetzen?'),
+      window.confirm('Reset the case file and all progress?'),
   ) {}
 
   start(): void {

@@ -38,12 +38,12 @@ function createCaseHeader(model: GameViewModel): HTMLElement {
   const identity = createElement('div');
   identity.append(
     textElement('p', 'ICS // PARANORMAL RESPONSE UNIT', 'unit-name'),
-    textElement('p', 'FALL-NR. ICS-2026-10', 'case-id'),
+    textElement('p', 'CASE NO. ICS-2026-10', 'case-id'),
   );
 
   const status = textElement(
     'span',
-    model.state.completed ? 'GESCHLOSSEN' : 'AKTIV',
+    model.state.completed ? 'CLOSED' : 'ACTIVE',
     `case-stamp${model.state.completed ? ' closed' : ''}`,
   );
   header.append(identity, status);
@@ -51,7 +51,7 @@ function createCaseHeader(model: GameViewModel): HTMLElement {
   const utility = createElement('div', 'utility-bar');
   utility.append(
     actionButton(
-      'Akte zurücksetzen',
+      'Reset case file',
       'reset',
       'utility-action',
     ),
@@ -63,39 +63,39 @@ function createCaseHeader(model: GameViewModel): HTMLElement {
 function renderIntro(): DocumentFragment {
   const content = document.createDocumentFragment();
   content.append(
-    textElement('p', 'Fall ICS-2026-10', 'document-code'),
-    heading('Einsatzbefehl: ICS Mansion'),
+    textElement('p', 'Case ICS-2026-10', 'document-code'),
+    heading('Mission briefing: ICS Mansion'),
     textElement(
       'p',
-      'Eine Beispiel-Sichtung wurde bereits dokumentiert. Nutze sie, um den Ablauf zu prüfen. Danach beginnt die echte Jagd mit der ersten codierten Spur.',
+      'One example sighting has already been documented. Use it to learn the procedure. The real hunt begins with the first encoded clue.',
       'lead',
     ),
   );
 
   const example = createElement('section', 'tutorial-sighting');
-  example.setAttribute('aria-label', 'Beispiel-Sichtung');
+  example.setAttribute('aria-label', 'Example sighting');
   example.append(
-    textElement('p', 'Beispiel-Sichtung', 'reference-label'),
-    textElement('p', 'König Buu Huu', 'tutorial-ghost'),
+    textElement('p', 'Example sighting', 'reference-label'),
+    textElement('p', 'King Boo', 'tutorial-ghost'),
     textElement(
       'p',
-      'Vor Ort findest du für jedes Ziel einen Geisternamen. Übertrage ihn exakt ins ECTO-VAC. Eine bestätigte Identität schaltet die nächste Spur frei.',
+      'Each target has a ghost name hidden on site. Enter it into the ECTO-VAC. A confirmed identity unlocks the next clue.',
     ),
   );
 
   const orders = createElement('dl', 'mission-orders');
   orders.append(
-    term('Auftrag'),
-    definition('4 weitere Erscheinungen lokalisieren und einfangen'),
-    term('Ausrüstung'),
-    definition('Smartphone, Kombinationsgabe, stabile Nerven'),
-    term('Belohnung'),
-    definition('Treat-Ausgabe nach vollständiger Akte'),
+    term('Mission'),
+    definition('Locate and capture 4 more apparitions'),
+    term('Equipment'),
+    definition('Smartphone, deduction skills, steady nerves'),
+    term('Reward'),
+    definition('Treat issued when the case file is complete'),
   );
   content.append(
     example,
     orders,
-    actionButton('Jagd beginnen', 'start', 'primary-action'),
+    actionButton('Start the hunt', 'start', 'primary-action'),
   );
   return content;
 }
@@ -104,10 +104,10 @@ function renderCapture(model: GameViewModel): DocumentFragment {
   const content = document.createDocumentFragment();
   content.append(
     textElement('p', 'ECTO-VAC // NAME INPUT', 'device-label'),
-    heading('Ziel identifizieren'),
+    heading('Identify target'),
     textElement(
       'p',
-      'Übernimm den exakten Namen vom Fundstück. Nur bestätigte Identitäten werden versiegelt.',
+      'Enter the name from the evidence marker. Only confirmed identities can be sealed.',
       'lead',
     ),
   );
@@ -119,7 +119,7 @@ function renderCapture(model: GameViewModel): DocumentFragment {
     '../assets/ghost-vacuum.svg',
     import.meta.url,
   ).href;
-  vacuum.alt = 'Aktiver ICS-Geistersauger';
+  vacuum.alt = 'Active ICS ghost vacuum';
   equipment.append(
     vacuum,
     textElement('figcaption', 'UNIT 03 // CONTAINMENT READY'),
@@ -128,9 +128,9 @@ function renderCapture(model: GameViewModel): DocumentFragment {
 
   const form = createElement('form', 'capture-form');
   form.dataset.action = 'capture';
-  form.setAttribute('aria-label', 'Geist einfangen');
+  form.setAttribute('aria-label', 'Capture ghost');
 
-  const label = textElement('label', 'Identität des Ziels', 'field-label');
+  const label = textElement('label', 'Target identity', 'field-label');
   label.htmlFor = 'ghost-name';
   const input = document.createElement('input');
   input.id = 'ghost-name';
@@ -140,9 +140,9 @@ function renderCapture(model: GameViewModel): DocumentFragment {
   input.autocapitalize = 'words';
   input.spellcheck = false;
   input.inputMode = 'text';
-  input.placeholder = 'GEISTERNAME';
+  input.placeholder = 'GHOST NAME';
   input.setAttribute('enterkeyhint', 'done');
-  input.setAttribute('aria-label', 'Name des Geistes');
+  input.setAttribute('aria-label', 'Ghost name');
   input.setAttribute('aria-required', 'true');
 
   form.append(label, input);
@@ -150,14 +150,14 @@ function renderCapture(model: GameViewModel): DocumentFragment {
     const error = textElement(
       'p',
       model.error === 'empty'
-        ? 'Gib den Namen des Geistes ein.'
-        : 'Geist entwischt – Name prüfen und erneut versuchen.',
+        ? 'Enter the ghost name.'
+        : 'Ghost escaped — check the name and try again.',
       'form-error',
     );
     error.setAttribute('role', 'alert');
     form.append(error);
   }
-  form.append(actionButton('Ziel versiegeln', undefined, 'primary-action', 'submit'));
+  form.append(actionButton('Seal target', undefined, 'primary-action', 'submit'));
   content.append(form);
   return content;
 }
@@ -173,11 +173,11 @@ function renderRiddle(state: GameState): DocumentFragment {
 
   const clueNumber = String(state.captured.length).padStart(2, '0');
   content.append(
-    textElement('p', `SPUR ${clueNumber}/04`, 'document-code'),
-    heading('Codierte Fallnotiz'),
+    textElement('p', `CLUE ${clueNumber}/04`, 'document-code'),
+    heading('Encoded case note'),
     textElement(
       'p',
-      'QUERVERWEIS // POPKULTURARCHIV',
+      'CROSS-REFERENCE // POP CULTURE ARCHIVE',
       'reference-label',
     ),
   );
@@ -185,12 +185,12 @@ function renderRiddle(state: GameState): DocumentFragment {
   const clue = createElement('blockquote', 'riddle');
   clue.append(
     textElement('p', capturedStation.nextRiddle),
-    textElement('span', 'ORT NICHT DIREKT BENANNT', 'clue-stamp'),
+    textElement('span', 'LOCATION NOT DIRECTLY NAMED', 'clue-stamp'),
   );
   content.append(
     clue,
     actionButton(
-      'Ziel vor Ort gefunden',
+      'Target located',
       'found',
       'primary-action',
     ),
@@ -201,22 +201,22 @@ function renderRiddle(state: GameState): DocumentFragment {
 function renderCompletion(state: GameState): DocumentFragment {
   const content = document.createDocumentFragment();
   content.append(
-    textElement('p', 'ABSCHLUSSBERICHT // 05/05', 'document-code'),
-    heading('Akte geschlossen'),
+    textElement('p', 'FINAL REPORT // 05/05', 'document-code'),
+    heading('Case closed'),
     textElement(
       'p',
-      'Mission erfüllt: Alle fünf Geister wurden eingefangen.',
+      'Mission complete: All five ghosts captured.',
       'lead',
     ),
     textElement(
       'p',
-      'Zeig diesen Bildschirm beim Office Management und hol dir deinen Treat.',
+      'Show this screen at Office Management and claim your treat.',
       'final-instruction',
     ),
   );
 
   const captured = createElement('ul', 'captured-ghosts');
-  captured.setAttribute('aria-label', 'Vollständige Geistersammlung');
+  captured.setAttribute('aria-label', 'Complete ghost collection');
   for (const id of state.captured) {
     const station = STATIONS.find((candidate) => candidate.id === id);
     if (station) {
@@ -229,20 +229,20 @@ function renderCompletion(state: GameState): DocumentFragment {
 
 function renderProgress(state: GameState): HTMLOListElement {
   const list = createElement('ol', 'evidence-index') as HTMLOListElement;
-  list.setAttribute('aria-label', 'Jagdfortschritt');
+  list.setAttribute('aria-label', 'Hunt progress');
 
   STATIONS.forEach((station, index) => {
     const isCaptured = state.captured.includes(station.id);
     const item = createElement('li', isCaptured ? 'secured' : 'open');
     item.setAttribute(
       'aria-label',
-      `Akte ${index + 1}: ${isCaptured ? 'gesichert' : 'offen'}`,
+      `File ${index + 1}: ${isCaptured ? 'secured' : 'open'}`,
     );
     item.append(
       textElement('span', String(index + 1).padStart(2, '0'), 'evidence-number'),
       textElement(
         'span',
-        isCaptured ? 'GESICHERT' : 'OFFEN',
+        isCaptured ? 'SECURED' : 'OPEN',
         'evidence-state',
       ),
     );
@@ -257,9 +257,9 @@ function createNotice(
   const status = textElement(
     'p',
     notice === 'memory-only'
-      ? 'Fortschritt kann nach dem Neuladen verloren gehen.'
+      ? 'Progress may be lost after reloading.'
       : notice === 'reset'
-        ? 'Ungültiger Spielstand wurde zurückgesetzt.'
+        ? 'Invalid saved game was reset.'
         : '',
     'status',
   );

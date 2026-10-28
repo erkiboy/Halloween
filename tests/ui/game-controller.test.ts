@@ -30,9 +30,9 @@ describe('GameController', () => {
   it('starts the hunt with the entrance tutorial already captured', () => {
     new GameController(root, store).start();
     fireEvent.click(
-      getByRole(root, 'button', { name: 'Jagd beginnen' }),
+      getByRole(root, 'button', { name: 'Start the hunt' }),
     );
-    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
+    expect(queryByText(root, /language without legs/)).toBeVisible();
     expect(store.saved.at(-1)).toMatchObject({
       currentStationId: 'wc',
       captured: ['entrance'],
@@ -41,9 +41,9 @@ describe('GameController', () => {
 
   it('shows empty error without mutating state', () => {
     startCapture(root, store);
-    fireEvent.submit(getByRole(root, 'form', { name: 'Geist einfangen' }));
+    fireEvent.submit(getByRole(root, 'form', { name: 'Capture ghost' }));
     expect(getByRole(root, 'alert')).toHaveTextContent(
-      'Gib den Namen des Geistes ein.',
+      'Enter the ghost name.',
     );
     expect(store.saved).toHaveLength(1);
     expect(store.saved[0]?.captured).toEqual(['entrance']);
@@ -51,11 +51,11 @@ describe('GameController', () => {
 
   it('shows incorrect error without persisting or rendering the attempt', () => {
     startCapture(root, store);
-    fireEvent.input(getByLabelText(root, 'Name des Geistes'), {
+    fireEvent.input(getByLabelText(root, 'Ghost name'), {
       target: { value: '<img src=x onerror=alert(1)>' },
     });
-    fireEvent.submit(getByRole(root, 'form', { name: 'Geist einfangen' }));
-    expect(getByRole(root, 'alert')).toHaveTextContent('Geist entwischt');
+    fireEvent.submit(getByRole(root, 'form', { name: 'Capture ghost' }));
+    expect(getByRole(root, 'alert')).toHaveTextContent('Ghost escaped');
     expect(root.querySelector('img[src="x"]')).toBeNull();
     expect(store.saved).toHaveLength(1);
     expect(store.saved[0]?.captured).toEqual(['entrance']);
@@ -63,11 +63,11 @@ describe('GameController', () => {
 
   it('captures a valid alias and opens the next riddle', () => {
     startCapture(root, store);
-    fireEvent.input(getByLabelText(root, 'Name des Geistes'), {
-      target: { value: 'Myrte' },
+    fireEvent.input(getByLabelText(root, 'Ghost name'), {
+      target: { value: 'Myrtle' },
     });
-    fireEvent.submit(getByRole(root, 'form', { name: 'Geist einfangen' }));
-    expect(queryByText(root, /Drei Zeichen kündigen ihn an/)).toBeVisible();
+    fireEvent.submit(getByRole(root, 'form', { name: 'Capture ghost' }));
+    expect(queryByText(root, /Three signs announce him/)).toBeVisible();
     expect(store.saved.at(-1)?.currentStationId).toBe('bistro');
   });
 
@@ -77,13 +77,13 @@ describe('GameController', () => {
       notice: null,
     };
     new GameController(root, store).start();
-    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
+    expect(queryByText(root, /language without legs/)).toBeVisible();
     fireEvent.click(
       getByRole(root, 'button', {
-        name: 'Ziel vor Ort gefunden',
+        name: 'Target located',
       }),
     );
-    const input = getByLabelText(root, 'Name des Geistes');
+    const input = getByLabelText(root, 'Ghost name');
     expect(input).toBeVisible();
     expect(input).toHaveFocus();
   });
@@ -94,7 +94,7 @@ describe('GameController', () => {
       notice: null,
     };
     new GameController(root, store).start();
-    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
+    expect(queryByText(root, /language without legs/)).toBeVisible();
   });
 
   it('requires confirmation before reset', () => {
@@ -105,7 +105,7 @@ describe('GameController', () => {
     const confirmReset = vi.fn(() => false);
     new GameController(root, store, confirmReset).start();
     fireEvent.click(
-      getByRole(root, 'button', { name: 'Akte zurücksetzen' }),
+      getByRole(root, 'button', { name: 'Reset case file' }),
     );
     expect(confirmReset).toHaveBeenCalledOnce();
     expect(store.clearCount).toBe(0);
@@ -115,10 +115,10 @@ describe('GameController', () => {
 function startCapture(root: HTMLElement, store: FakeStore): void {
   new GameController(root, store).start();
   fireEvent.click(
-    getByRole(root, 'button', { name: 'Jagd beginnen' }),
+    getByRole(root, 'button', { name: 'Start the hunt' }),
   );
   fireEvent.click(
-    getByRole(root, 'button', { name: 'Ziel vor Ort gefunden' }),
+    getByRole(root, 'button', { name: 'Target located' }),
   );
 }
 

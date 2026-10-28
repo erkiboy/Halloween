@@ -5,9 +5,9 @@ import { isAcceptedAnswer, normalizeAnswer } from '../../src/domain/answers';
 
 describe('normalizeAnswer', () => {
   it.each([
-    ['  KÖNIG   BUU HUU ', 'koenig buu huu'],
+    ['  KING   BOO ', 'king boo'],
     ['Freddy-Krueger', 'freddy krueger'],
-    ['Maulende\u00a0Myrte', 'maulende myrte'],
+    ['Moaning\u00a0Myrtle', 'moaning myrtle'],
   ])('normalizes %s', (input, expected) => {
     expect(normalizeAnswer(input)).toBe(expected);
   });

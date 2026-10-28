@@ -25,11 +25,11 @@ describe('renderGame', () => {
 
   it('renders intro before the mission starts', () => {
     renderGame(root, model({ phase: 'intro' }));
-    expect(queryByText(root, 'Fall ICS-2026-10')).toBeVisible();
-    expect(queryByText(root, 'Beispiel-Sichtung')).toBeVisible();
-    expect(queryByText(root, 'König Buu Huu')).toBeVisible();
+    expect(queryByText(root, 'Case ICS-2026-10')).toBeVisible();
+    expect(queryByText(root, 'Example sighting')).toBeVisible();
+    expect(queryByText(root, 'King Boo')).toBeVisible();
     expect(
-      getByRole(root, 'button', { name: 'Jagd beginnen' }),
+      getByRole(root, 'button', { name: 'Start the hunt' }),
     ).toBeVisible();
   });
 
@@ -37,18 +37,18 @@ describe('renderGame', () => {
     renderGame(root, model({ phase: 'capture' }));
     expect(queryByText(root, 'ECTO-VAC // NAME INPUT')).toBeVisible();
     expect(
-      getByRole(root, 'img', { name: 'Aktiver ICS-Geistersauger' }),
+      getByRole(root, 'img', { name: 'Active ICS ghost vacuum' }),
     ).toBeVisible();
-    expect(getByLabelText(root, 'Name des Geistes')).toHaveAttribute(
+    expect(getByLabelText(root, 'Ghost name')).toHaveAttribute(
       'autocomplete',
       'off',
     );
-    expect(getByLabelText(root, 'Name des Geistes')).toHaveAttribute(
+    expect(getByLabelText(root, 'Ghost name')).toHaveAttribute(
       'enterkeyhint',
       'done',
     );
     expect(
-      getByRole(root, 'button', { name: 'Ziel versiegeln' }),
+      getByRole(root, 'button', { name: 'Seal target' }),
     ).toBeVisible();
   });
 
@@ -59,10 +59,10 @@ describe('renderGame', () => {
       captured: ['entrance'],
     } satisfies GameState;
     renderGame(root, model({ state, phase: 'riddle' }));
-    expect(queryByText(root, 'SPUR 01/04')).toBeVisible();
-    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
+    expect(queryByText(root, 'CLUE 01/04')).toBeVisible();
+    expect(queryByText(root, /language without legs/)).toBeVisible();
     expect(
-      getByRole(root, 'button', { name: 'Ziel vor Ort gefunden' }),
+      getByRole(root, 'button', { name: 'Target located' }),
     ).toBeVisible();
   });
 
@@ -89,7 +89,7 @@ describe('renderGame', () => {
     expect(
       queryByText(
         root,
-        'Mission erfüllt: Alle fünf Geister wurden eingefangen.',
+        'Mission complete: All five ghosts captured.',
       ),
     ).toBeVisible();
   });
@@ -97,7 +97,7 @@ describe('renderGame', () => {
   it('renders storage notices as status messages', () => {
     renderGame(root, model({ notice: 'memory-only' }));
     expect(getByRole(root, 'status')).toHaveTextContent(
-      'Fortschritt kann nach dem Neuladen verloren gehen.',
+      'Progress may be lost after reloading.',
     );
   });
 });
