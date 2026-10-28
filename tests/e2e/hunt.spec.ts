@@ -104,6 +104,27 @@ test('does not overflow a 320px viewport', async ({ page }) => {
     .toBe(true);
 });
 
+test('keeps capture controls touch-friendly on mobile', async ({ page }) => {
+  await expect(page.locator('meta[name="viewport"]')).toHaveAttribute(
+    'content',
+    /viewport-fit=cover/,
+  );
+  await page.getByRole('button', { name: 'Jagd beginnen' }).click();
+  await page
+    .getByRole('button', { name: 'Ziel vor Ort gefunden' })
+    .click();
+
+  const input = page.getByLabel('Name des Geistes');
+  const submit = page.getByRole('button', { name: 'Ziel versiegeln' });
+  await expect(input).toHaveAttribute('enterkeyhint', 'done');
+  await expect
+    .poll(() => input.evaluate((element) => parseFloat(getComputedStyle(element).fontSize)))
+    .toBeGreaterThanOrEqual(16);
+  await expect
+    .poll(() => submit.evaluate((element) => element.getBoundingClientRect().height))
+    .toBeGreaterThanOrEqual(48);
+});
+
 test('completes a capture with reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.getByRole('button', { name: 'Jagd beginnen' }).click();

@@ -43,6 +43,10 @@ describe('renderGame', () => {
       'autocomplete',
       'off',
     );
+    expect(getByLabelText(root, 'Name des Geistes')).toHaveAttribute(
+      'enterkeyhint',
+      'done',
+    );
     expect(
       getByRole(root, 'button', { name: 'Ziel versiegeln' }),
     ).toBeVisible();

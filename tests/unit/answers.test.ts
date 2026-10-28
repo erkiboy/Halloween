@@ -30,4 +30,23 @@ describe('isAcceptedAnswer', () => {
   it('rejects another station answer', () => {
     expect(isAcceptedAnswer(STATIONS[0]!, 'Hui Buh')).toBe(false);
   });
+
+  it.each([
+    ['wc', 'Maulnde Myrta'],
+    ['bistro', 'Hackfleish hassender Zerhaker'],
+    ['meeting-room', 'Hui Buhh'],
+  ] as const)('accepts bounded typos for %s', (id, answer) => {
+    const station = STATIONS.find((candidate) => candidate.id === id);
+    expect(station).toBeDefined();
+    expect(isAcceptedAnswer(station!, answer)).toBe(true);
+  });
+
+  it.each([
+    ['wc', 'Malnde Myrta'],
+    ['meeting-room', 'Hai Bux'],
+  ] as const)('rejects excessive typos for %s', (id, answer) => {
+    const station = STATIONS.find((candidate) => candidate.id === id);
+    expect(station).toBeDefined();
+    expect(isAcceptedAnswer(station!, answer)).toBe(false);
+  });
 });

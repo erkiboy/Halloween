@@ -83,7 +83,9 @@ describe('GameController', () => {
         name: 'Ziel vor Ort gefunden',
       }),
     );
-    expect(getByLabelText(root, 'Name des Geistes')).toBeVisible();
+    const input = getByLabelText(root, 'Name des Geistes');
+    expect(input).toBeVisible();
+    expect(input).toHaveFocus();
   });
 
   it('restores persisted progress on start', () => {
