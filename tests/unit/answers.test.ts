@@ -15,10 +15,10 @@ describe('normalizeAnswer', () => {
 
 describe('isAcceptedAnswer', () => {
   it.each([
-    ['entrance', 'König Buu Huu'],
     ['entrance', 'king boo'],
-    ['wc', 'MYRTE'],
-    ['bistro', 'Hackfleisch-hassender Zerhacker'],
+    ['wc', 'MOANING MYRTLE'],
+    ['wc', 'Myrtle'],
+    ['bistro', 'Hash Slinging Slasher'],
     ['meeting-room', 'hui buh'],
     ['office-management', 'Freddy'],
   ] as const)('accepts %s answer %s', (id, answer) => {
@@ -32,8 +32,8 @@ describe('isAcceptedAnswer', () => {
   });
 
   it.each([
-    ['wc', 'Maulnde Myrta'],
-    ['bistro', 'Hackfleish hassender Zerhaker'],
+    ['wc', 'Moaning Myrta'],
+    ['bistro', 'Hash Slingin Slashe'],
     ['meeting-room', 'Hui Buhh'],
   ] as const)('accepts bounded typos for %s', (id, answer) => {
     const station = STATIONS.find((candidate) => candidate.id === id);
@@ -42,7 +42,7 @@ describe('isAcceptedAnswer', () => {
   });
 
   it.each([
-    ['wc', 'Malnde Myrta'],
+    ['wc', 'Monin Myrta'],
     ['meeting-room', 'Hai Bux'],
   ] as const)('rejects excessive typos for %s', (id, answer) => {
     const station = STATIONS.find((candidate) => candidate.id === id);

@@ -15,31 +15,31 @@ export interface Station {
 export const STATIONS: readonly Station[] = [
   {
     id: 'entrance',
-    ghostName: 'König Buu Huu',
-    acceptedAnswers: ['König Buu Huu', 'Buu Huu', 'King Boo'],
+    ghostName: 'King Boo',
+    acceptedAnswers: ['King Boo'],
     nextRiddle:
-      'Der nächste Spuk bewacht einen Eingang, den nur eine Sprache ohne Beine öffnen kann. Wo eine Schülerin seit Jahrzehnten klagt und Rohre tiefer führen als jeder Abfluss, beginnt deine Suche.',
+      'The next haunting guards an entrance opened only by a language without legs. Where a student has complained for decades and pipes lead deeper than any drain, your search begins.',
   },
   {
     id: 'wc',
-    ghostName: 'Maulende Myrte',
-    acceptedAnswers: ['Maulende Myrte', 'Myrte'],
+    ghostName: 'Moaning Myrtle',
+    acceptedAnswers: ['Moaning Myrtle', 'Myrtle'],
     nextRiddle:
-      'Drei Zeichen kündigen ihn an: Das Licht flackert. Das Telefon schweigt. Ein Bus erscheint. In Bikini Bottom begann damit eine gefürchtete Nachtschicht. Im ICS ersetzt du Burger durch Bohnen und folgst dorthin, wo die Crew ihren Hunger und ihre Müdigkeit besiegt.',
+      'Three signs announce him: the lights flicker, the phone falls silent, and a bus appears. In Bikini Bottom they marked a feared night shift. At ICS, replace burgers with beans and follow the crew to where hunger and fatigue are defeated.',
   },
   {
     id: 'bistro',
-    ghostName: 'Hackfleisch hassender Zerhacker',
-    acceptedAnswers: ['Hackfleisch hassender Zerhacker'],
+    ghostName: 'Hash-Slinging Slasher',
+    acceptedAnswers: ['Hash-Slinging Slasher', 'Hash Slinging Slasher'],
     nextRiddle:
-      'Seit Jahrhunderten spukt er ohne gültige Lizenz. Seine Burg fehlt, doch ein Saal genügt. Suche keine Rittertafel: Finde jene Runde, die mehr Lebende versammelt als jede andere im Haus. Dort wartet der einzig behördlich geprüfte Spuk.',
+      "For centuries he has haunted without a valid license. His castle is missing, but one hall will do. Do not seek a knight's table: find the room that gathers more living souls than any other in the building. The officially inspected ghost is waiting there.",
   },
   {
     id: 'meeting-room',
     ghostName: 'Hui Buh',
     acceptedAnswers: ['Hui Buh'],
     nextRiddle:
-      'Der Letzte wartet nicht dort, wo du schläfst, sondern dort, wo Albträume des Büroalltags enden: verlorene Schlüssel, fehlende Vorräte, unbekannte Räume. Finde die Stelle, die all das verwaltet. Dein Lohn liegt bereits in ihrer Obhut.',
+      'The last one is not waiting where you sleep, but where office nightmares end: missing keys, empty supplies, and rooms nobody can identify. Find the team that manages them all. Your reward is already in their custody.',
   },
   {
     id: 'office-management',
