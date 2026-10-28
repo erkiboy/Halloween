@@ -67,23 +67,35 @@ function renderIntro(): DocumentFragment {
     heading('Einsatzbefehl: ICS Mansion'),
     textElement(
       'p',
-      'Fünf paranormale Signaturen wurden im Office bestätigt. Identifiziere jedes Ziel vor Ort. Sichere danach die nächste codierte Spur.',
+      'Eine Beispiel-Sichtung wurde bereits dokumentiert. Nutze sie, um den Ablauf zu prüfen. Danach beginnt die echte Jagd mit der ersten codierten Spur.',
       'lead',
+    ),
+  );
+
+  const example = createElement('section', 'tutorial-sighting');
+  example.setAttribute('aria-label', 'Beispiel-Sichtung');
+  example.append(
+    textElement('p', 'Beispiel-Sichtung', 'reference-label'),
+    textElement('p', 'König Buu Huu', 'tutorial-ghost'),
+    textElement(
+      'p',
+      'Vor Ort findest du für jedes Ziel einen Geisternamen. Übertrage ihn exakt ins ECTO-VAC. Eine bestätigte Identität schaltet die nächste Spur frei.',
     ),
   );
 
   const orders = createElement('dl', 'mission-orders');
   orders.append(
     term('Auftrag'),
-    definition('5 Erscheinungen lokalisieren und einfangen'),
+    definition('4 weitere Erscheinungen lokalisieren und einfangen'),
     term('Ausrüstung'),
     definition('Smartphone, Kombinationsgabe, stabile Nerven'),
     term('Belohnung'),
     definition('Treat-Ausgabe nach vollständiger Akte'),
   );
   content.append(
+    example,
     orders,
-    actionButton('Einsatz beginnen', 'start', 'primary-action'),
+    actionButton('Jagd beginnen', 'start', 'primary-action'),
   );
   return content;
 }

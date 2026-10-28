@@ -27,12 +27,16 @@ describe('GameController', () => {
     store = new FakeStore();
   });
 
-  it('starts at entrance capture after the intro action', () => {
+  it('starts the hunt with the entrance tutorial already captured', () => {
     new GameController(root, store).start();
     fireEvent.click(
-      getByRole(root, 'button', { name: 'Einsatz beginnen' }),
+      getByRole(root, 'button', { name: 'Jagd beginnen' }),
     );
-    expect(getByLabelText(root, 'Name des Geistes')).toBeVisible();
+    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
+    expect(store.saved.at(-1)).toMatchObject({
+      currentStationId: 'wc',
+      captured: ['entrance'],
+    });
   });
 
   it('shows empty error without mutating state', () => {
@@ -41,7 +45,8 @@ describe('GameController', () => {
     expect(getByRole(root, 'alert')).toHaveTextContent(
       'Gib den Namen des Geistes ein.',
     );
-    expect(store.saved).toHaveLength(0);
+    expect(store.saved).toHaveLength(1);
+    expect(store.saved[0]?.captured).toEqual(['entrance']);
   });
 
   it('shows incorrect error without persisting or rendering the attempt', () => {
@@ -52,17 +57,18 @@ describe('GameController', () => {
     fireEvent.submit(getByRole(root, 'form', { name: 'Geist einfangen' }));
     expect(getByRole(root, 'alert')).toHaveTextContent('Geist entwischt');
     expect(root.querySelector('img[src="x"]')).toBeNull();
-    expect(store.saved).toHaveLength(0);
+    expect(store.saved).toHaveLength(1);
+    expect(store.saved[0]?.captured).toEqual(['entrance']);
   });
 
   it('captures a valid alias and opens the next riddle', () => {
     startCapture(root, store);
     fireEvent.input(getByLabelText(root, 'Name des Geistes'), {
-      target: { value: 'king boo' },
+      target: { value: 'Myrte' },
     });
     fireEvent.submit(getByRole(root, 'form', { name: 'Geist einfangen' }));
-    expect(queryByText(root, /Sprache ohne Beine/)).toBeVisible();
-    expect(store.saved.at(-1)?.currentStationId).toBe('wc');
+    expect(queryByText(root, /Drei Zeichen kündigen ihn an/)).toBeVisible();
+    expect(store.saved.at(-1)?.currentStationId).toBe('bistro');
   });
 
   it('opens the next capture only through the found action', () => {
@@ -107,7 +113,10 @@ describe('GameController', () => {
 function startCapture(root: HTMLElement, store: FakeStore): void {
   new GameController(root, store).start();
   fireEvent.click(
-    getByRole(root, 'button', { name: 'Einsatz beginnen' }),
+    getByRole(root, 'button', { name: 'Jagd beginnen' }),
+  );
+  fireEvent.click(
+    getByRole(root, 'button', { name: 'Ziel vor Ort gefunden' }),
   );
 }
 

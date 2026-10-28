@@ -203,6 +203,33 @@ h1 {
   line-height: 1.5;
 }
 
+.tutorial-sighting {
+  margin: 1.3rem 0;
+  border: 1px solid var(--ink);
+  border-left: 0.45rem solid var(--signal);
+  padding: 0.75rem 0.9rem;
+  background: rgb(255 255 255 / 18%);
+}
+
+.tutorial-sighting .reference-label {
+  margin: 0 0 0.35rem;
+  color: var(--signal);
+}
+
+.tutorial-sighting p:last-child {
+  margin-bottom: 0;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.tutorial-ghost {
+  margin: 0;
+  font-family: ui-monospace, monospace;
+  font-size: clamp(1.25rem, 5.5vw, 1.7rem);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 .mission-orders {
   display: grid;
   grid-template-columns: auto 1fr;

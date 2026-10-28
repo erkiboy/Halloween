@@ -16,7 +16,7 @@ describe('app shell', () => {
       getByRole(app!, 'heading', { name: 'Einsatzbefehl: ICS Mansion' }),
     ).toBeVisible();
     expect(
-      getByRole(app!, 'button', { name: 'Einsatz beginnen' }),
+      getByRole(app!, 'button', { name: 'Jagd beginnen' }),
     ).toBeVisible();
   });
 });

@@ -26,8 +26,10 @@ describe('renderGame', () => {
   it('renders intro before the mission starts', () => {
     renderGame(root, model({ phase: 'intro' }));
     expect(queryByText(root, 'Fall ICS-2026-10')).toBeVisible();
+    expect(queryByText(root, 'Beispiel-Sichtung')).toBeVisible();
+    expect(queryByText(root, 'König Buu Huu')).toBeVisible();
     expect(
-      getByRole(root, 'button', { name: 'Einsatz beginnen' }),
+      getByRole(root, 'button', { name: 'Jagd beginnen' }),
     ).toBeVisible();
   });
 

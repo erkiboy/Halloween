@@ -51,6 +51,15 @@ export class GameController {
     const action = target.closest<HTMLElement>('[data-action]')?.dataset.action;
     switch (action) {
       case 'start':
+        this.state = captureCurrentGhost(this.state);
+        this.notice =
+          this.storage.save(this.state) === 'memory-only'
+            ? 'memory-only'
+            : this.notice;
+        this.phase = 'riddle';
+        this.error = null;
+        this.render();
+        break;
       case 'found':
         this.phase = 'capture';
         this.error = null;
