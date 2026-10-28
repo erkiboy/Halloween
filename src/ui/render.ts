@@ -139,7 +139,9 @@ function renderCapture(model: GameViewModel): DocumentFragment {
   input.autocomplete = 'off';
   input.autocapitalize = 'words';
   input.spellcheck = false;
+  input.inputMode = 'text';
   input.placeholder = 'GEISTERNAME';
+  input.setAttribute('enterkeyhint', 'done');
   input.setAttribute('aria-label', 'Name des Geistes');
   input.setAttribute('aria-required', 'true');
 

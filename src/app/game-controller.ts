@@ -64,6 +64,9 @@ export class GameController {
         this.phase = 'capture';
         this.error = null;
         this.render();
+        this.root
+          .querySelector<HTMLInputElement>('#ghost-name')
+          ?.focus();
         break;
       case 'reset':
         this.reset();
